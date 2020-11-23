@@ -1,11 +1,16 @@
 // Ignore first, second items of argv (node bin path and script path)
-const [, , collectionName, fieldName, findValue] = process.argv;
+const [, , collectionName, fieldName, operator, findValue] = process.argv;
 
 if (!collectionName || collectionName == "-h" || collectionName == "--help") {
   console.log(
-    "Usage\t: node findByField.js <collectionName> <columnName> <findValue>"
+    "Retrieve rows in Firestore database based on specified field value."
   );
-  console.log("Example\t: node findByField.js users email john@example.com");
+  console.log(
+    "Usage\t: node findByField.js <collectionName> <columnName> <operator> <findValue>"
+  );
+  console.log(
+    "Example\t: node findByField.js users email '==' 'john@example.com'"
+  );
   process.exit(0);
 }
 
@@ -23,7 +28,7 @@ const firestore = firebaseAdmin.firestore();
 
 firestore
   .collection(collectionName)
-  .where(fieldName, "==", findValue)
+  .where(fieldName, operator, findValue)
   .get()
   .then((snapshot) => {
     if (snapshot.empty) {
