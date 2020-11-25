@@ -6,14 +6,14 @@ if (!collectionName || collectionName == "-h" || collectionName == "--help") {
     "Get the latest documents in collection. Limit is set to 5 records by default."
   );
   console.log(
-    "Usage\t: node getLatestDocuments.js <collectionName> <fieldsToRetrieve> <sortBy> <limit=5>"
+    "Usage\t: node listLatestDocuments.js <collectionName> <fieldsToRetrieve> <sortBy> <limit=5>"
   );
-  console.log("Example\t: node listDocumentsTemplate.js users name,email createdAt 5");
+  console.log("Example\t: node listLatestDocuments.js users name,email createdAt 5");
   process.exit(0);
 }
 
 if (!fieldsToRetrieve || !sortBy){
-  console.log('[ERROR] Please specify your documents')
+  console.log('[ERROR] both fieldsToRetrieve and sortBy arguments cannot be empty')
   process.exit(1)
 }
 
