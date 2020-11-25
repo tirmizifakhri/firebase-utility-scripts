@@ -25,8 +25,18 @@ admin.initializeApp({
 
 const collectionRef = admin.firestore().collection(collectionName);
 
-(id ? collectionRef.doc(id) : collectionRef.doc())
-  .create(JSON.parse(json))
+const payload = JSON.parse(json);
+
+// If `docId` key exist in payload, use it as firestore document id.
+// Else, use `id` from argument or fallback to auto id from firestore.
+let docId = null;
+if (payload.docId) {
+  docId = payload.docId;
+  delete payload.docId;
+}
+
+(docId || id ? collectionRef.doc(docId || id) : collectionRef.doc())
+  .create(payload)
   .then((doc) => {
     console.log("[INFO] document created");
   })
